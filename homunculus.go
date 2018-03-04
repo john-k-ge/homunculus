@@ -5,28 +5,32 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"strings"
 
 	"errors"
+
 	"github.com/cloudfoundry-community/go-cfenv"
 	"github.com/john-k-ge/homunculus/cf"
 	"github.com/john-k-ge/homunculus/cs"
 )
 
+// Homunculus : Defines the Homunculus watcher
 type Homunculus struct {
 	//creds      string
 	ceilings   map[string]int64
 	conditions cs.ConditionSet
-	cf         cf.CfClient
+	cf         *cf.CfClient
 }
 
+// HConfig : Defines the Homunculus necessary config properties
 type HConfig struct {
-	CFUser    string
-	CFPass    string
-	RedisHost string
-	RedisPort string
-	RedisPass string
+	CFUser  string
+	CFPass  string
+	APIHost string
+	UAAHost string
 }
 
+// NewHomunculus : Creates a new Homunculus
 func NewHomunculus(config *HConfig) (*Homunculus, error) {
 	guid := os.Getenv("CF_INSTANCE_GUID")
 	if len(guid) == 0 {
@@ -42,39 +46,56 @@ func NewHomunculus(config *HConfig) (*Homunculus, error) {
 
 	appEnv, _ := cfenv.Current()
 	services := appEnv.Services
-	pc, err := services.WithNameUsingPattern("cache")
+	caches, err := services.WithNameUsingPattern("cache")
 	if err != nil {
 		log.Printf("Error ")
 	}
 
-	var conditions cs.ConditionSet
-
-	switch {
-	case len(config.RedisHost) == 0:
-		fallthrough
-	case len(config.RedisPort) == 0:
-		fallthrough
-	case len(config.RedisPass) == 0:
-		log.Printf("No Redis info passed.  Using local")
-		conditions = cs.NewLocalConditionSet()
-	default:
-		conditions, err = cs.NewRemoteCondtionSet(config.RedisHost, config.RedisPort, config.RedisPass, idx)
+	var rHost, rPort, rPass string
+	for _, cache := range caches {
+		for credKey, credVal := range cache.Credentials {
+			switch {
+			case strings.EqualFold(credKey, "host"):
+				rHost = credVal.(string)
+			case strings.EqualFold(credKey, "port"):
+				rPort = fmt.Sprint(credVal)
+			case strings.EqualFold(credKey, "password"):
+				rPass = credVal.(string)
+			}
+		}
 	}
 
+	var conditions cs.ConditionSet
+	conditions, err = cs.NewRemoteCondtionSet(rHost, rPort, rPass, idx)
+
 	if err != nil {
-		log.Printf("Failed to created ConditionSet: %v", err)
-		return nil, err
+		log.Printf("Failed to create remote condition set: %v", err)
+		log.Print("Defaulting to local.")
+		conditions = cs.NewLocalConditionSet()
+	}
+
+	cfClient, err := cf.NewCfClient(cf.CfConfig{
+		Api:     config.APIHost,
+		Uaa:     config.UAAHost,
+		AppGuid: guid,
+		Uid:     config.CFUser,
+		Pass:    config.CFPass,
+	})
+
+	if err != nil {
+		log.Printf("Failed to create CFClient: %v", err)
 	}
 
 	h := Homunculus{
 		ceilings:   make(map[string]int64),
 		conditions: conditions,
-		// Need to generate a cfConfig -> cfClient
+		cf:         cfClient,
 	}
 
 	return &h, nil
 }
 
+// AddCondition : Registers a new condition and corresponding max val
 func (h *Homunculus) AddCondition(cond string, max int64) error {
 	h.ceilings[cond] = max
 	err := h.conditions.SaveCondition(cond, 0)
@@ -85,6 +106,7 @@ func (h *Homunculus) AddCondition(cond string, max int64) error {
 	return nil
 }
 
+// Increment : Increment a given condition and die if necessary
 func (h *Homunculus) Increment(cond string) error {
 	current, err := h.conditions.IncrementCondition(cond)
 	if err != nil {
@@ -100,9 +122,13 @@ func (h *Homunculus) Increment(cond string) error {
 	return nil
 }
 
+// die : Try to gracefully shutdown via a CF kill; otherwise just die hard
 func (h *Homunculus) die(cond string) error {
-	log.Printf("`die` called due to failed condition '%v'", fmt.Sprintf("%v.%v", cond, h.idx))
-	// make cf kill app instance call
-
+	log.Printf("`die` called due to failed condition '%v'", cond)
+	err := h.cf.StopCFApp()
+	if err != nil {
+		log.Printf("Failed to stop app gracefully: %v", err)
+		os.Exit(1)
+	}
 	return nil
 }

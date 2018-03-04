@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 	"strings"
 
 	"github.com/john-k-ge/homunculus/uaa"
@@ -22,8 +23,7 @@ type CfClient struct {
 }
 
 type CfConfig struct {
-	Api, Uaa, AppGuid, Uid, Pass string
-	Index                        int
+	Api, Uaa, AppGuid, Uid, Pass, Index string
 }
 
 func validateConfig(c *CfConfig) error {
@@ -35,18 +35,24 @@ func validateConfig(c *CfConfig) error {
 	return nil
 }
 
-func NewCfClient(config *CfConfig) (*CfClient, error) {
+func NewCfClient(config CfConfig) (*CfClient, error) {
 
-	err := validateConfig(config)
+	err := validateConfig(&config)
 	if err != nil {
 		log.Printf("failed to create CFClient: %v", err)
+		return nil, err
+	}
+
+	indxInt, err := strconv.Atoi(config.Index)
+	if err != nil {
+		log.Printf("Failed to parse index value `%v`: %v", config.Index, err)
 		return nil, err
 	}
 
 	cf := CfClient{
 		apiUrl:  config.Api,
 		appGuid: config.AppGuid,
-		index:   config.Index,
+		index:   indxInt,
 	}
 
 	cf.uaaClient = uaa.NewUaaClient(config.Uaa, config.Uid, config.Pass)
