@@ -13,6 +13,7 @@ import (
 
 const (
 	appPath = "/v2/apps/%v/instances/%v" // e.g. /v2/apps/f68b80bc-ab1d-46ee-8b42-94337c96e143/instances/0
+	https   = "https://"
 )
 
 type CfClient struct {
@@ -50,7 +51,7 @@ func NewCfClient(config CfConfig) (*CfClient, error) {
 	}
 
 	cf := CfClient{
-		apiUrl:  config.Api,
+		apiUrl:  https + config.Api,
 		appGuid: config.AppGuid,
 		index:   indxInt,
 	}
