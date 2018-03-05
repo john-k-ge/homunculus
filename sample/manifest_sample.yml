@@ -1,0 +1,10 @@
+---
+applications:
+  - name: homie-sample
+    buildpack: https://github.com/cloudfoundry/binary-buildpack
+    memory: 64m
+    env:
+      CFU: 
+      CFP: 
+      UAA: uaa.system.aws-usw02-pr.ice.predix.io
+      API: api.system.aws-usw02-pr.ice.predix.io
