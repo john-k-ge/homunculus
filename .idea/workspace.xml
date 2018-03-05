@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d0758cc0-1407-42ee-bc10-d2881948d239" name="Default" comment="" />
+    <list default="true" id="d0758cc0-1407-42ee-bc10-d2881948d239" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/cf/transport_test.go" afterPath="$PROJECT_DIR$/cf/transport_test.go" />
+      <change beforePath="$PROJECT_DIR$/sample/sample" afterPath="$PROJECT_DIR$/sample/sample" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -12,14 +16,42 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="homunculus.go" pinned="false" current-in-tab="true">
+      <file leaf-file-name="homunculus.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/homunculus.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="46" column="26" lean-forward="false" selection-start-line="46" selection-start-column="26" selection-end-line="46" selection-end-column="26" />
-              <folding>
-                <element signature="e#20#194#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="478">
+              <caret line="50" column="26" lean-forward="false" selection-start-line="50" selection-start-column="26" selection-end-line="50" selection-end-column="26" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitIgnore" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.gitIgnore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="12" lean-forward="false" selection-start-line="0" selection-start-column="12" selection-end-line="0" selection-end-column="12" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="manifest.yml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sample/manifest.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="7" column="28" lean-forward="false" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="transport_test.go" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cf/transport_test.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -27,10 +59,10 @@
       <file leaf-file-name="transport.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cf/transport.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="37" column="45" lean-forward="false" selection-start-line="37" selection-start-column="37" selection-end-line="37" selection-end-column="45" />
+            <state relative-caret-position="450">
+              <caret line="38" column="45" lean-forward="false" selection-start-line="38" selection-start-column="45" selection-end-line="38" selection-end-column="45" />
               <folding>
-                <element signature="e#12#109#0" expanded="true" />
+                <element signature="e#12#120#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -84,7 +116,7 @@
         <entry file="file://$PROJECT_DIR$/cs/localConditionSet.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="653">
-              <caret line="48" column="1" lean-forward="true" selection-start-line="48" selection-start-column="1" selection-end-line="48" selection-end-column="1" />
+              <caret line="48" column="1" lean-forward="false" selection-start-line="48" selection-start-column="1" selection-end-line="48" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -106,6 +138,9 @@
     </findStrings>
   </component>
   <component name="GOROOT" path="/usr/local/Cellar/go/1.10/libexec" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="GradleLocalSettings">
     <option name="externalProjectsViewState">
       <projects_view />
@@ -132,6 +167,9 @@
         <option value="$PROJECT_DIR$/cs/remoteConditionSet.go" />
         <option value="$PROJECT_DIR$/cs/localConditionSet.go" />
         <option value="$PROJECT_DIR$/homunculus.go" />
+        <option value="$PROJECT_DIR$/.gitIgnore" />
+        <option value="$PROJECT_DIR$/sample/manifest.yml" />
+        <option value="$PROJECT_DIR$/cf/transport_test.go" />
       </list>
     </option>
   </component>
@@ -170,6 +208,7 @@
       </profile-state>
     </entry>
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
@@ -205,6 +244,11 @@
             <path>
               <item name="homunculus" type="b2602c69:ProjectViewProjectNode" />
               <item name="homunculus" type="462c0819:PsiDirectoryNode" />
+              <item name="sample" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="homunculus" type="b2602c69:ProjectViewProjectNode" />
+              <item name="homunculus" type="462c0819:PsiDirectoryNode" />
               <item name="uaa" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -231,6 +275,11 @@
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="ask.go.tool.to.install.GoMetaLinterTaskConsumer" value="true" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///Users/212419672/go/src/github.com/john-k-ge/homunculus/cache/caching.go" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/sample" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -413,7 +462,7 @@
       <workItem from="1519903084945" duration="164000" />
       <workItem from="1519940045434" duration="11068000" />
       <workItem from="1519988564710" duration="99000" />
-      <workItem from="1520010202023" duration="1574000" />
+      <workItem from="1520010202023" duration="1961000" />
     </task>
     <servers />
   </component>
@@ -423,7 +472,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="34400000" />
+    <option name="totallyTimeSpent" value="34787000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
@@ -435,7 +484,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297456" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -492,34 +541,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/cf/transport.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="37" column="45" lean-forward="false" selection-start-line="37" selection-start-column="37" selection-end-line="37" selection-end-column="45" />
-          <folding>
-            <element signature="e#12#109#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/uaa/uaa.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="39" column="0" lean-forward="false" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-          <folding>
-            <element signature="e#13#77#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cs/conditionSet.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="19" lean-forward="false" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cs/remoteConditionSet.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="705">
@@ -550,9 +571,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="840">
           <caret line="56" column="0" lean-forward="false" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
-          <folding>
-            <element signature="e#20#194#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -561,7 +580,7 @@
         <state relative-caret-position="555">
           <caret line="37" column="45" lean-forward="false" selection-start-line="37" selection-start-column="37" selection-end-line="37" selection-end-column="45" />
           <folding>
-            <element signature="e#12#109#0" expanded="true" />
+            <element signature="e#12#120#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -621,9 +640,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#20#194#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -632,7 +649,7 @@
         <state relative-caret-position="555">
           <caret line="37" column="45" lean-forward="false" selection-start-line="37" selection-start-column="37" selection-end-line="37" selection-end-column="45" />
           <folding>
-            <element signature="e#12#109#0" expanded="true" />
+            <element signature="e#12#120#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -685,9 +702,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="750">
           <caret line="56" column="0" lean-forward="false" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
-          <folding>
-            <element signature="e#20#194#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -696,7 +711,7 @@
         <state relative-caret-position="435">
           <caret line="37" column="45" lean-forward="false" selection-start-line="37" selection-start-column="37" selection-end-line="37" selection-end-column="45" />
           <folding>
-            <element signature="e#12#109#0" expanded="true" />
+            <element signature="e#12#120#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -746,9 +761,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="750">
           <caret line="56" column="0" lean-forward="false" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
-          <folding>
-            <element signature="e#20#194#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -757,7 +770,7 @@
         <state relative-caret-position="435">
           <caret line="37" column="45" lean-forward="false" selection-start-line="37" selection-start-column="37" selection-end-line="37" selection-end-column="45" />
           <folding>
-            <element signature="e#12#109#0" expanded="true" />
+            <element signature="e#12#120#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -807,9 +820,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
           <caret line="32" column="19" lean-forward="false" selection-start-line="32" selection-start-column="19" selection-end-line="32" selection-end-column="19" />
-          <folding>
-            <element signature="e#20#194#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -843,7 +854,7 @@
         <state relative-caret-position="240">
           <caret line="20" column="36" lean-forward="false" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="36" />
           <folding>
-            <element signature="e#12#109#0" expanded="true" />
+            <element signature="e#12#120#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -887,7 +898,7 @@
     <entry file="file://$PROJECT_DIR$/cs/localConditionSet.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="653">
-          <caret line="48" column="1" lean-forward="true" selection-start-line="48" selection-start-column="1" selection-end-line="48" selection-end-column="1" />
+          <caret line="48" column="1" lean-forward="false" selection-start-line="48" selection-start-column="1" selection-end-line="48" selection-end-column="1" />
           <folding />
         </state>
       </provider>
@@ -904,21 +915,43 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cf/transport.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="37" column="45" lean-forward="false" selection-start-line="37" selection-start-column="37" selection-end-line="37" selection-end-column="45" />
+        <state relative-caret-position="450">
+          <caret line="38" column="45" lean-forward="false" selection-start-line="38" selection-start-column="45" selection-end-line="38" selection-end-column="45" />
           <folding>
-            <element signature="e#12#109#0" expanded="true" />
+            <element signature="e#12#120#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/homunculus.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="46" column="26" lean-forward="false" selection-start-line="46" selection-start-column="26" selection-end-line="46" selection-end-column="26" />
-          <folding>
-            <element signature="e#20#194#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="478">
+          <caret line="50" column="26" lean-forward="false" selection-start-line="50" selection-start-column="26" selection-end-line="50" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitIgnore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="12" lean-forward="false" selection-start-line="0" selection-start-column="12" selection-end-line="0" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sample/manifest.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="28" lean-forward="false" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf/transport_test.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

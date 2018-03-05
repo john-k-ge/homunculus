@@ -2,6 +2,7 @@ package cf
 
 import (
 	"log"
+	"os"
 	"testing"
 )
 
@@ -14,8 +15,11 @@ const (
 	badIndex  = "9001"
 
 	uaaUrl = "uaa.system.aws-usw02-pr.ice.predix.io"
-	uid    = "predix-support_systemuser"
-	pass   = ">pTz5yvM97N@y_G"
+)
+
+var (
+	uid  = os.Getenv("uid")
+	pass = os.Getenv("pass")
 )
 
 func Test_GoodNewCfClient(t *testing.T) {
