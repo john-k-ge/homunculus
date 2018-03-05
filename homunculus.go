@@ -31,7 +31,7 @@ type HConfig struct {
 }
 
 // NewHomunculus : Creates a new Homunculus
-func NewHomunculus(config *HConfig) (*Homunculus, error) {
+func NewHomunculus(config HConfig) (*Homunculus, error) {
 	guid := os.Getenv("CF_INSTANCE_GUID")
 	if len(guid) == 0 {
 		log.Printf("No guid found in CF env")
@@ -95,31 +95,42 @@ func NewHomunculus(config *HConfig) (*Homunculus, error) {
 	return &h, nil
 }
 
+func (h *Homunculus) AddBulkConditions(conds map[string]int64) error {
+	for c, m := range conds {
+		err := h.AddCondition(c, m)
+		if err != nil {
+			log.Printf("Failed to process bulk: c/m `%v/%v`: %v", c, m, err)
+			return err
+		}
+	}
+	return nil
+}
+
 // AddCondition : Registers a new condition and corresponding max val
 func (h *Homunculus) AddCondition(cond string, max int64) error {
 	h.ceilings[cond] = max
 	err := h.conditions.SaveCondition(cond, 0)
 	if err != nil {
-		log.Printf("Failed to conditions condition %v: %v", cond, err)
+		log.Printf("Failed to add condition %v: %v", cond, err)
 		return err
 	}
 	return nil
 }
 
 // Increment : Increment a given condition and die if necessary
-func (h *Homunculus) Increment(cond string) error {
+func (h *Homunculus) Increment(cond string) (int64, error) {
 	current, err := h.conditions.IncrementCondition(cond)
 	if err != nil {
 		log.Printf("Failed to pre-check `%v` before increment: %v", cond, err)
-		return err
+		return 0, err
 	}
 	if current >= h.ceilings[cond] {
 		log.Printf("%v: '%v' hit max '%v'.  Calling die()", cond, current, h.ceilings[cond])
 		h.die(cond)
-		return nil
+		return current, nil
 	}
 	log.Printf("'%v' is now %v", cond, current)
-	return nil
+	return current, nil
 }
 
 // die : Try to gracefully shutdown via a CF kill; otherwise just die hard
