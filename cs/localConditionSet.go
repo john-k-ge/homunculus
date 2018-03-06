@@ -13,6 +13,7 @@ func NewLocalConditionSet() *LocalCache {
 	lc := LocalCache{
 		conditionSet: make(map[string]int64),
 	}
+	log.Printf("Creating a localcache: %v", lc)
 	return &lc
 }
 

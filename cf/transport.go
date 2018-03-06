@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"strconv"
 	"strings"
 
 	"github.com/john-k-ge/homunculus/uaa"
@@ -24,7 +23,8 @@ type CfClient struct {
 }
 
 type CfConfig struct {
-	Api, Uaa, AppGuid, Uid, Pass, Index string
+	Api, Uaa, AppGuid, Uid, Pass string
+	Index                        int
 }
 
 func validateConfig(c *CfConfig) error {
@@ -44,7 +44,6 @@ func NewCfClient(config CfConfig) (*CfClient, error) {
 		return nil, err
 	}
 
-	indxInt, err := strconv.Atoi(config.Index)
 	if err != nil {
 		log.Printf("Failed to parse index value `%v`: %v", config.Index, err)
 		return nil, err
@@ -53,7 +52,7 @@ func NewCfClient(config CfConfig) (*CfClient, error) {
 	cf := CfClient{
 		apiUrl:  https + config.Api,
 		appGuid: config.AppGuid,
-		index:   indxInt,
+		index:   config.Index,
 	}
 
 	cf.uaaClient = uaa.NewUaaClient(config.Uaa, config.Uid, config.Pass)
@@ -84,29 +83,3 @@ func (cf *CfClient) StopCFApp() error {
 	// I should be dead by now
 	return nil
 }
-
-// REST call stuff for CF
-
-/*
-
-DO NOT RESTAGE!!  INSTEAD RESTART AN APP INSTANCE!!
-
-`DELETE /v2/apps/f68b80bc-ab1d-46ee-8b42-94337c96e143/instances/0`
-
-func (app *CFApp) Restage() error {
-	client := uaaIntegration.GetPlatformUaaClient()
-
-	appGuid, err := cfCalls.PostCfObject(client, fmt.Sprintf(restageAppPrfx, app.Guid), "")
-
-	if err != nil || len(appGuid) <= 0 {
-		log.Printf("Could not restage app %v:  %v", app.Name, err)
-		return err
-	}
-
-	app.Running = true
-
-	log.Printf("Restaged app with Guid: %v", appGuid)
-	return nil
-}
-
-*/

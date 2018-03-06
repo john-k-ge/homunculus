@@ -2,16 +2,20 @@ package uaa
 
 import (
 	"log"
+	"os"
 	"testing"
 )
 
 const (
 	goodUaaHost = "uaa.system.aws-usw02-pr.ice.predix.io"
-	goodUid     = "predix-support_systemuser"
-	goodPass    = ">pTz5yvM97N@y_G"
 	badUaaHost  = "localhost"
 	badUid      = "unga"
 	badPass     = "bunga"
+)
+
+var (
+	goodUid  = os.Getenv("CFUID")
+	goodPass = os.Getenv("CFPASS")
 )
 
 func TestUaaClient_AuthenticateGood(t *testing.T) {

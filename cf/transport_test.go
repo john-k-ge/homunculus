@@ -11,15 +11,15 @@ const (
 	badApi    = "localhost"
 	goodGuid  = "60b31aa7-6ee8-42a7-97b6-bfb514b42f04"
 	badGuid   = "herp-derp-unga-bunga"
-	goodIndex = "0"
+	goodIndex = 0
 	badIndex  = "9001"
 
 	uaaUrl = "uaa.system.aws-usw02-pr.ice.predix.io"
 )
 
 var (
-	uid  = os.Getenv("uid")
-	pass = os.Getenv("pass")
+	uid  = os.Getenv("CFUID")
+	pass = os.Getenv("CFPASS")
 )
 
 func Test_GoodNewCfClient(t *testing.T) {
@@ -64,15 +64,3 @@ func Test_GoodStopApp(t *testing.T) {
 		}
 	})
 }
-
-// func Test_BadNewCfClient(t *testing.T) {
-// 	bad1 := CfConfig{
-// 		Uaa:  uaaUrl,
-// 		Uid:  uid,
-// 		Pass: pass,
-
-// 		Api:     badApi,
-// 		AppGuid: badGuid,
-// 		Index:   badIndex,
-// 	}
-// }

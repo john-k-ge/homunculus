@@ -7,6 +7,7 @@ import (
 	"os"
 
 	h "github.com/john-k-ge/homunculus"
+	"github.com/john-k-ge/homunculus/cf"
 )
 
 const (
@@ -20,20 +21,31 @@ var (
 		dbError: 5,
 		timeout: 3,
 	}
+	cfConf = cf.CfEnv{
+		Inx:     0,
+		Guid:    "60b31aa7-6ee8-42a7-97b6-bfb514b42f04",
+		CFUser:  os.Getenv("uid"),
+		CFPass:  os.Getenv("pass"),
+		APIHost: "api.system.aws-usw02-pr.ice.predix.io",
+		UAAHost: "uaa.system.aws-usw02-pr.ice.predix.io",
+	}
 )
 
-func pullCFEnv() h.HConfig {
+func pullCFEnv() *cf.CfEnv {
+
 	cfUser := os.Getenv("CFU")
 	cfPass := os.Getenv("CFP")
 	api := os.Getenv("API")
 	uaa := os.Getenv("UAA")
 
-	return h.HConfig{
-		CFUser:  cfUser,
-		CFPass:  cfPass,
-		APIHost: api,
-		UAAHost: uaa,
-	}
+	cfEnvVals := cf.GetCFEnvVals()
+
+	cfEnvVals.APIHost = api
+	cfEnvVals.UAAHost = uaa
+	cfEnvVals.CFUser = cfUser
+	cfEnvVals.CFPass = cfPass
+
+	return cfEnvVals
 }
 
 func generateDbError(w http.ResponseWriter, req *http.Request) {
@@ -59,7 +71,13 @@ func generateTimeout(w http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
-	homie, err := h.NewHomunculus(pullCFEnv())
+	var err error
+	if len(os.Getenv("LOCAL")) != 0 {
+		log.Print("Running on a local machine")
+		homie, err = h.NewHomunculus(&cfConf)
+	} else {
+		homie, err = h.NewHomunculus(pullCFEnv())
+	}
 	if err != nil {
 		log.Printf("Failed to initialize Homunculus: %v", err)
 		os.Exit(1)
@@ -71,6 +89,8 @@ func main() {
 		os.Exit(2)
 	}
 
+	log.Printf("String represention: %v", homie)
+
 	fmt.Println("Starting...")
 	port := os.Getenv("PORT")
 	log.Printf("Listening on port %v", port)
@@ -79,8 +99,9 @@ func main() {
 	}
 
 	http.HandleFunc("/db", generateDbError)
-	http.HandleFunc("timeout", generateTimeout)
+	http.HandleFunc("/timeout", generateTimeout)
 
+	log.Printf("Running on port: %v", port)
 	err = http.ListenAndServe(":"+port, nil)
 	if err != nil {
 		log.Printf("Listen and serve err: %v", err)

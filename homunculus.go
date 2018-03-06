@@ -1,94 +1,48 @@
 package homunculus
 
 import (
-	"fmt"
 	"log"
 	"os"
-	"strconv"
-	"strings"
 
-	"errors"
-
-	"github.com/cloudfoundry-community/go-cfenv"
 	"github.com/john-k-ge/homunculus/cf"
 	"github.com/john-k-ge/homunculus/cs"
 )
 
 // Homunculus : Defines the Homunculus watcher
 type Homunculus struct {
-	//creds      string
 	ceilings   map[string]int64
 	conditions cs.ConditionSet
 	cf         *cf.CfClient
 }
 
-// HConfig : Defines the Homunculus necessary config properties
-type HConfig struct {
-	CFUser  string
-	CFPass  string
-	APIHost string
-	UAAHost string
-}
-
 // NewHomunculus : Creates a new Homunculus
-func NewHomunculus(config HConfig) (*Homunculus, error) {
-	guid := os.Getenv("CF_INSTANCE_GUID")
-	if len(guid) == 0 {
-		log.Printf("No guid found in CF env")
-		return nil, errors.New("no guid found in CF env")
-	}
-	cfIndex := os.Getenv("CF_INSTANCE_INDEX")
-	idx, err := strconv.Atoi(cfIndex)
-	if err != nil {
-		log.Printf("Could not parse app index: %v", err)
-		return nil, err
-	}
-
-	appEnv, _ := cfenv.Current()
-	services := appEnv.Services
-	caches, err := services.WithNameUsingPattern("cache")
-	if err != nil {
-		log.Printf("Error ")
-	}
-
-	var rHost, rPort, rPass string
-	for _, cache := range caches {
-		for credKey, credVal := range cache.Credentials {
-			switch {
-			case strings.EqualFold(credKey, "host"):
-				rHost = credVal.(string)
-			case strings.EqualFold(credKey, "port"):
-				rPort = fmt.Sprint(credVal)
-			case strings.EqualFold(credKey, "password"):
-				rPass = credVal.(string)
-			}
-		}
-	}
-
-	var conditions cs.ConditionSet
-	conditions, err = cs.NewRemoteCondtionSet(rHost, rPort, rPass, idx)
+func NewHomunculus(config *cf.CfEnv) (*Homunculus, error) {
+	var conds cs.ConditionSet
+	conds, err := cs.NewRemoteCondtionSet(config)
 
 	if err != nil {
 		log.Printf("Failed to create remote condition set: %v", err)
 		log.Print("Defaulting to local.")
-		conditions = cs.NewLocalConditionSet()
+		conds = cs.NewLocalConditionSet()
 	}
 
 	cfClient, err := cf.NewCfClient(cf.CfConfig{
 		Api:     config.APIHost,
 		Uaa:     config.UAAHost,
-		AppGuid: guid,
+		AppGuid: config.Guid,
 		Uid:     config.CFUser,
 		Pass:    config.CFPass,
+		Index:   config.Inx,
 	})
 
 	if err != nil {
 		log.Printf("Failed to create CFClient: %v", err)
+		return nil, err
 	}
 
 	h := Homunculus{
 		ceilings:   make(map[string]int64),
-		conditions: conditions,
+		conditions: conds,
 		cf:         cfClient,
 	}
 
@@ -96,6 +50,7 @@ func NewHomunculus(config HConfig) (*Homunculus, error) {
 }
 
 func (h *Homunculus) AddBulkConditions(conds map[string]int64) error {
+	log.Printf("Processing %v bulk conditions", len(conds))
 	for c, m := range conds {
 		err := h.AddCondition(c, m)
 		if err != nil {
@@ -108,6 +63,7 @@ func (h *Homunculus) AddBulkConditions(conds map[string]int64) error {
 
 // AddCondition : Registers a new condition and corresponding max val
 func (h *Homunculus) AddCondition(cond string, max int64) error {
+	log.Printf("Processing %v, %v", cond, max)
 	h.ceilings[cond] = max
 	err := h.conditions.SaveCondition(cond, 0)
 	if err != nil {
@@ -119,6 +75,8 @@ func (h *Homunculus) AddCondition(cond string, max int64) error {
 
 // Increment : Increment a given condition and die if necessary
 func (h *Homunculus) Increment(cond string) (int64, error) {
+	log.Printf("Incrementing %v", cond)
+
 	current, err := h.conditions.IncrementCondition(cond)
 	if err != nil {
 		log.Printf("Failed to pre-check `%v` before increment: %v", cond, err)

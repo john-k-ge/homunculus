@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"log"
 	"testing"
+
+	"github.com/john-k-ge/homunculus/cf"
 )
 
 const (
@@ -19,7 +21,14 @@ const (
 func buildCaches() ([]ConditionSet, error) {
 	var caches = []ConditionSet{}
 
-	rc, err := NewRemoteCondtionSet(host, port, pass, index)
+	env := cf.CfEnv{
+		RHost:   host,
+		RPort:   port,
+		RPasswd: pass,
+		Inx:     index,
+	}
+
+	rc, err := NewRemoteCondtionSet(&env)
 	if err != nil {
 		return caches, err
 	}
@@ -30,7 +39,13 @@ func buildCaches() ([]ConditionSet, error) {
 }
 
 func TestNewRemoteCache(t *testing.T) {
-	_, err := NewRemoteCondtionSet(host, port, pass, index)
+	env := cf.CfEnv{
+		RHost:   host,
+		RPort:   port,
+		RPasswd: pass,
+		Inx:     index,
+	}
+	_, err := NewRemoteCondtionSet(&env)
 	if err != nil {
 		log.Printf("Failed to create new cache(%v, %v, %v): %v", host, port, pass, err)
 		t.Fail()

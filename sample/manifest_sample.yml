@@ -3,6 +3,8 @@ applications:
   - name: homie-sample
     buildpack: https://github.com/cloudfoundry/binary-buildpack
     memory: 64m
+    path: build
+    command: ./sample-linux
     env:
       CFU: 
       CFP: 
