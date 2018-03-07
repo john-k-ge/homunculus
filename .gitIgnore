@@ -1,2 +1,3 @@
 manifest.yml
 set_env.sh
+sample/build/*

@@ -3,9 +3,11 @@ package cs
 import (
 	"errors"
 	"log"
+	"sync"
 )
 
 type LocalCache struct {
+	sync.RWMutex
 	conditionSet map[string]int64
 }
 
@@ -22,7 +24,9 @@ func (lc *LocalCache) SaveCondition(condition string, count int64) error {
 		log.Print("Key must have a value")
 		return errors.New("key must have a value")
 	}
+	lc.RLock()
 	lc.conditionSet[condition] = count
+	lc.Unlock()
 	return nil
 }
 
@@ -40,12 +44,16 @@ func (lc *LocalCache) ConditionExists(condition string) (bool, error) {
 }
 
 func (lc *LocalCache) DeleteCondition(condition string) error {
+	lc.RLock()
 	delete(lc.conditionSet, condition)
+	lc.Unlock()
 	return nil
 }
 
 func (lc *LocalCache) ClearConditions() error {
+	lc.RLock()
 	lc.conditionSet = make(map[string]int64)
+	lc.Unlock()
 	return nil
 }
 
@@ -54,7 +62,9 @@ func (lc *LocalCache) IncrementCondition(condition string) (int64, error) {
 	if !exists {
 		return 0, errors.New("condition " + condition + " not found")
 	}
+	lc.RLock()
 	lc.conditionSet[condition] = lc.conditionSet[condition] + 1
+	lc.Unlock()
 	return lc.conditionSet[condition], nil
 }
 

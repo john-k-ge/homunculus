@@ -22,4 +22,8 @@ In a real app, these would represent conditions your app would encounter at runt
 failures.  If you trap these errors like you should, you can also increment the associated counter.  Once the app has hit 
 the ceiling you've set, Homunculus will throw in the towel and ask Cloud Foundry to restart this app instance. 
 
-
+# Usage
+In general, nay new homunculus needs a property set to initialize the subcomponents.  The easiest startingo point is a run of `cf.GetCFEnvVals()`. This will snoop the current app environment, and intuit most of the necessary properties.  But this isn't enough, as the app's standard 
+env vars cannot find bits like the CF API or UAA hosts, nor your space's robot creds.  The sample adheres to the common practice of setting these in the `env` section of the manifest and fetching them via `os.Getenv()`.  Alternatively, you could save creds in a CUPS, and then use 
+`cfenv.Current()` to navigate through the Services to find your CUPS.  
+With that squared away, you simply call the `NewHomunculus()` constuctor.  If an initialization error occurs, you can make the decision to do something or simply proceed unhomunculused. You can then load it up with a set of condition names and corresponding ceiling values.  You can be very specific with your conditions ("connection_refused", vs "connection_timeout), or simply classify them in groups (e.g. "rabbit", "postgres", "network"). At runtime, when you catch your error, `Increment()` it and continue processing.  There's no need to keep track on your own.  That's homunculus's job!
